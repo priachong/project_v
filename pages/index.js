@@ -74,7 +74,7 @@ function GiftPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center p-4">
       <img src="/berjaya.jpg" alt="she said yes!" className="w-128 h-64 mb-4 rounded-lg shadow-lg" />
-      <h1 className="text-3xl font-bold font-serif max-w-lg whitespace-nowrap">can't wait for our special date! ❤️</h1>
+      <h1 className="text-3xl font-bold font-serif max-w-lg">can't wait for our special date! ❤️</h1>
       <p className="text-lg mt-2 font-serif max-w-xl">from afif, here's a little gift for you :p</p>
       <HeartJumpGame />
     </div>
@@ -166,8 +166,20 @@ function HeartJumpGame() {
 
     gameLoop();
 
-    window.addEventListener("keydown", jump);
-    return () => window.removeEventListener("keydown", jump);
+    // Event listener for mouse or touch to make the heart jump
+    const handleJump = (e) => {
+      // Prevent default behavior for touch
+      if (e.type === "touchstart") e.preventDefault();
+      jump();
+    };
+
+    window.addEventListener("click", handleJump);
+    window.addEventListener("touchstart", handleJump);
+
+    return () => {
+      window.removeEventListener("click", handleJump);
+      window.removeEventListener("touchstart", handleJump);
+    };
   }, [gameStarted]);
 
   return (
