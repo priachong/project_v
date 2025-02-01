@@ -94,9 +94,9 @@ function HeartJumpGame() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    let heart = { x: 50, y: 130, width: 20, height: 20, dy: 0, gravity: 0.5, jump: -10 };
+    let heart = { x: 50, y: 130, width: 20, height: 20, dy: 0, gravity: 0.2, jump: -7 };
     let obstacles = [];
-    let gameSpeed = 3;
+    let gameSpeed = 1;
     let gameActive = true;
 
     function setBackground() {
@@ -111,23 +111,33 @@ function HeartJumpGame() {
     }
 
     function drawObstacles() {
-      ctx.fillStyle = "#3e9c43"; // Bright pink obstacles
-      obstacles.forEach((obs) => ctx.fillRect(obs.x, obs.y, obs.width, obs.height));
+      ctx.font = "20px sans-serif";
+      obstacles.forEach((obs) => {
+        ctx.fillText(obs.emoji, obs.x, obs.y);
+      });
     }
+
+    const obstacleEmojis = ["😺", "💋", "🍫", "😈","🐤", "🌞", "💐", "🍓"]; // List of emojis to use as obstacles
 
     function updateObstacles() {
       obstacles.forEach((obs) => {
         obs.x -= gameSpeed;
-        if (obs.x + obs.width < 0) {
-          obstacles.shift();
-          setScore((prev) => prev + 1);
-        }
       });
 
-      if (Math.random() < 0.02) {
-        obstacles.push({ x: 300, y: 140, width: 20, height: 20 });
+      // Remove obstacles that go off-screen and update score
+      if (obstacles.length > 0 && obstacles[0].x + 20 < 0) {
+        obstacles.shift();
+        setScore((prev) => prev + 1);
       }
-    }
+
+      // Ensure proper spacing before spawning a new obstacle
+      if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < 200) {
+        if (Math.random() < 0.02) { 
+          const randomEmoji = obstacleEmojis[Math.floor(Math.random() * obstacleEmojis.length)];
+          obstacles.push({ x: 300, y: 140, width: 20, height: 20, emoji: randomEmoji });
+        }
+      }
+    }     
 
     function jump() {
       if (heart.y >= 130) heart.dy = heart.jump;
@@ -183,7 +193,7 @@ function HeartJumpGame() {
   }, [gameStarted]);
 
   return (
-    <div className="flex flex-col items-center mt-4 relative">
+    <div className="flex flex-col items-center mt-4 relative overflow-y-auto min-h-screen">
       {/* Container for buttons */}
       <div className="mb-4">
         {!gameStarted && (
