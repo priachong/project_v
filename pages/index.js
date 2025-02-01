@@ -176,6 +176,12 @@ function HeartJumpGame() {
 
     gameLoop();
 
+    if (isGameOver) {
+      setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      }, 300); // Small delay to ensure the button renders before scrolling
+    }
+
     // Event listener for mouse or touch to make the heart jump
     const handleJump = (e) => {
       // Prevent default behavior for touch
@@ -190,7 +196,7 @@ function HeartJumpGame() {
       window.removeEventListener("click", handleJump);
       window.removeEventListener("touchstart", handleJump);
     };
-  }, [gameStarted]);
+  }, [gameStarted], [isGameOver]);
 
   return (
     <div className="flex flex-col items-center mt-4 relative overflow-y-auto min-h-screen">
