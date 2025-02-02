@@ -113,14 +113,18 @@ function HeartJumpGame() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    let heart = { x: 50, y: 130, width: 20, height: 20, dy: 0, gravity: 0.5, jump: -7 };
+    let heart = { x: 50, y: 130, width: 20, height: 20, dy: 0, gravity: 0.45, jump: -7 };
     let obstacles = [];
     let gameSpeed = 3;
     let gameActive = true;
 
     function setBackground() {
-      ctx.fillStyle = "#e0a8e6"; // Light blue sky color
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const bgImage = new Image();
+      bgImage.src = "/spongebob.jpg"; // Replace with the correct path to your image
+    
+      bgImage.onload = function () {
+        ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+      };
     }
 
     function drawHeart() {
