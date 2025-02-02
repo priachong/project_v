@@ -196,7 +196,7 @@ function HeartJumpGame() {
       window.removeEventListener("click", handleJump);
       window.removeEventListener("touchstart", handleJump);
     };
-  }, [gameStarted], [isGameOver]);
+  }, [gameStarted, isGameOver]);
 
   return (
     <div className="flex flex-col items-center mt-4 relative overflow-y-auto min-h-screen">
