@@ -71,12 +71,31 @@ function ValentineInvite() {
 
 // Page 2 - Gift Page with Heart Jump Game
 function GiftPage() {
+  const [isGameStarted, setIsGameStarted] = useState(false);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center p-4">
-      <img src="/berjaya.jpg" alt="she said yes!" className="w-128 h-64 mb-4 rounded-lg shadow-lg" />
-      <h1 className="text-3xl font-bold font-serif max-w-lg">can't wait for our special date! ❤️</h1>
-      <p className="text-lg mt-2 font-serif max-w-xl">from afif, here's a little gift for you :p</p>
-      <HeartJumpGame />
+      {/* Only show this section if game hasn't started */}
+      {!isGameStarted && (
+        <>
+          <img src="/berjaya.jpg" alt="she said yes!" className="w-128 h-64 mb-4 rounded-lg shadow-lg" />
+          <h1 className="text-3xl font-bold font-serif max-w-lg">can't wait for our special date! ❤️</h1>
+          <p className="text-lg mt-2 font-serif max-w-xl">from afif, here's a little gift for you :p</p>
+        </>
+      )}
+
+      {/* Start button is shown before game starts */}
+      {!isGameStarted && (
+        <button
+          onClick={() => setIsGameStarted(true)}
+          className="font-serif mt-6 px-6 py-3 bg-green-400 text-white rounded-full text-lg shadow-lg hover:bg-pink-400"
+        >
+          press me to start!
+        </button>
+      )}
+
+      {/* Game shows only when started */}
+      {isGameStarted && <HeartJumpGame />}
     </div>
   );
 }
@@ -176,12 +195,6 @@ function HeartJumpGame() {
 
     gameLoop();
 
-    if (isGameOver) {
-      setTimeout(() => {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-      }, 300); // Small delay to ensure the button renders before scrolling
-    }
-
     // Event listener for mouse or touch to make the heart jump
     const handleJump = (e) => {
       // Prevent default behavior for touch
@@ -196,10 +209,10 @@ function HeartJumpGame() {
       window.removeEventListener("click", handleJump);
       window.removeEventListener("touchstart", handleJump);
     };
-  }, [gameStarted, isGameOver]);
+  }, [gameStarted]);
 
   return (
-    <div className="flex flex-col items-center mt-4 relative overflow-y-auto min-h-screen">
+    <div className="absolute inset-0 flex flex-col items-center justify-center min-h-screen">
       {/* Container for buttons */}
       <div className="mb-4">
         {!gameStarted && (
