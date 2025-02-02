@@ -90,7 +90,7 @@ function GiftPage() {
           onClick={() => setIsGameStarted(true)}
           className="font-serif mt-6 px-6 py-3 bg-green-400 text-white rounded-full text-lg shadow-lg hover:bg-pink-400"
         >
-          press me to start!
+          proceed to gift
         </button>
       )}
 
@@ -113,7 +113,7 @@ function HeartJumpGame() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    let heart = { x: 50, y: 130, width: 20, height: 20, dy: 0, gravity: 0.2, jump: -7 };
+    let heart = { x: 50, y: 130, width: 20, height: 20, dy: 0, gravity: 0.5, jump: -7 };
     let obstacles = [];
     let gameSpeed = 3;
     let gameActive = true;
