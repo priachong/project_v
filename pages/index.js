@@ -96,7 +96,7 @@ function HeartJumpGame() {
 
     let heart = { x: 50, y: 130, width: 20, height: 20, dy: 0, gravity: 0.2, jump: -7 };
     let obstacles = [];
-    let gameSpeed = 1;
+    let gameSpeed = 3;
     let gameActive = true;
 
     function setBackground() {
